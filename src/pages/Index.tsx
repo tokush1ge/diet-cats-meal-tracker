@@ -1,33 +1,30 @@
+import { useNavigate } from "react-router-dom";
 import { DietCatsLogo } from "@/components/DietCatsLogo";
-import { MealCard } from "@/components/MealCard";
-import { StatsCard } from "@/components/StatsCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Trophy, Target, Flame } from "lucide-react";
+import { 
+  Trophy, 
+  Target, 
+  Users, 
+  ArrowRight,
+  Calendar,
+  Award
+} from "lucide-react";
 
 const Index = () => {
-  const handleAddFood = () => {
-    // TODO: Implement food addition modal
-    console.log("Add food clicked");
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background pb-20">
       {/* Header */}
       <header className="bg-gradient-hero border-b p-4">
         <div className="container mx-auto flex items-center justify-between">
           <DietCatsLogo size="md" />
-          <div className="flex items-center gap-4">
-            <Badge className="bg-dietcats-green text-white">
-              <Trophy className="w-3 h-3 mr-1" />
-              Streak: 7 dias
-            </Badge>
-            <Button variant="outline" className="text-white border-white hover:bg-white/20">
-              <Users className="w-4 h-4 mr-2" />
-              Competições
-            </Button>
-          </div>
+          <Badge className="bg-dietcats-green text-white">
+            <Trophy className="w-3 h-3 mr-1" />
+            Streak: 7 dias
+          </Badge>
         </div>
       </header>
 
@@ -38,93 +35,114 @@ const Index = () => {
             Olá, Paulo! 👋
           </h2>
           <p className="text-muted-foreground">
-            Vamos manter sua dieta em dia hoje?
+            Bem-vindo ao DietCats! Acompanhe sua jornada nutricional.
           </p>
         </div>
 
-        {/* Daily Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <StatsCard
-            title="Calorias"
-            value={1450}
-            target={2000}
-            unit="kcal"
-            color="orange"
-            icon="🔥"
-          />
-          <StatsCard
-            title="Proteínas"
-            value={85}
-            target={150}
-            unit="g"
-            color="green"
-            icon="💪"
-          />
-          <StatsCard
-            title="Carboidratos"
-            value={180}
-            target={250}
-            unit="g"
-            color="blue"
-            icon="🌾"
-          />
-          <StatsCard
-            title="Gorduras"
-            value={45}
-            target={65}
-            unit="g"
-            color="purple"
-            icon="🥑"
-          />
+        {/* Quick Stats */}
+        <div className="grid grid-cols-2 gap-4">
+          <Card className="bg-dietcats-orange/10 border-dietcats-orange/20">
+            <CardContent className="pt-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Hoje</p>
+                  <p className="text-2xl font-bold text-dietcats-orange">3/4</p>
+                  <p className="text-sm text-muted-foreground">Refeições</p>
+                </div>
+                <Target className="w-8 h-8 text-dietcats-orange" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-dietcats-green/10 border-dietcats-green/20">
+            <CardContent className="pt-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-muted-foreground">Ranking</p>
+                  <p className="text-2xl font-bold text-dietcats-green">2º</p>
+                  <p className="text-sm text-muted-foreground">Posição</p>
+                </div>
+                <Trophy className="w-8 h-8 text-dietcats-green" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Today's Meals */}
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xl font-semibold text-foreground">
-              Refeições de Hoje
-            </h3>
-            <Badge variant="outline" className="gap-1">
-              <Target className="w-3 h-3" />
-              3/4 refeições
-            </Badge>
-          </div>
+        {/* Quick Actions */}
+        <div className="grid gap-4">
+          <Card 
+            className="cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => navigate('/meals')}
+          >
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-dietcats-orange/20 rounded-lg flex items-center justify-center">
+                    🍽️
+                  </div>
+                  <span>Refeições de Hoje</span>
+                </div>
+                <ArrowRight className="w-5 h-5 text-muted-foreground" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Registre suas refeições e acompanhe suas metas nutricionais
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <MealCard
-              mealType="breakfast"
-              time="08:30"
-              foods={["Aveia com frutas", "Café com leite"]}
-              calories={450}
-              onAddFood={handleAddFood}
-            />
-            <MealCard
-              mealType="lunch"
-              time="12:45"
-              foods={["Arroz integral", "Peito de frango grelhado", "Salada verde"]}
-              calories={650}
-              onAddFood={handleAddFood}
-            />
-            <MealCard
-              mealType="snack"
-              time="16:00"
-              foods={["Banana", "Castanhas"]}
-              calories={200}
-              onAddFood={handleAddFood}
-            />
-            <MealCard
-              mealType="dinner"
-              onAddFood={handleAddFood}
-            />
-          </div>
-        </section>
+          <Card 
+            className="cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => navigate('/challenges')}
+          >
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-dietcats-blue/20 rounded-lg flex items-center justify-center">
+                    🎯
+                  </div>
+                  <span>Desafios</span>
+                </div>
+                <ArrowRight className="w-5 h-5 text-muted-foreground" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Complete desafios diários e semanais para ganhar pontos
+              </p>
+            </CardContent>
+          </Card>
 
-        {/* Competition Section */}
+          <Card 
+            className="cursor-pointer hover:shadow-md transition-shadow"
+            onClick={() => navigate('/competitions')}
+          >
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 bg-dietcats-green/20 rounded-lg flex items-center justify-center">
+                    🏆
+                  </div>
+                  <span>Competições</span>
+                </div>
+                <ArrowRight className="w-5 h-5 text-muted-foreground" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground">
+                Dispute com amigos e outros usuários em desafios semanais
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Featured Competition */}
         <Card className="bg-gradient-primary text-white">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Trophy className="w-5 h-5" />
-              Competição da Semana
+              Competição Ativa
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -135,15 +153,19 @@ const Index = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-white/80">Sua posição:</p>
-                  <p className="text-2xl font-bold">2º lugar</p>
+                  <p className="text-xl font-bold">2º lugar</p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm text-white/80">Participantes:</p>
                   <p className="text-lg font-semibold">48 amigos</p>
                 </div>
               </div>
-              <Button variant="secondary" className="w-full">
-                Ver Ranking Completo
+              <Button 
+                variant="secondary" 
+                className="w-full"
+                onClick={() => navigate('/competitions')}
+              >
+                Ver Detalhes
               </Button>
             </div>
           </CardContent>
